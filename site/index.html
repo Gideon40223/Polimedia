@@ -73,6 +73,13 @@ img{max-width:100%}
 .empty{padding:40px 0;color:var(--mute);max-width:40ch}
 .empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:4px}
 .off{color:#B42318}
+.inst{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;padding:12px 8px 12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+.inst[hidden]{display:none}
+.inst img{width:40px;height:40px;border-radius:9px;flex:none}
+.inst p{margin:0;flex:1 1 180px;font-size:14px;line-height:20px}
+.inst p b{display:block;font-size:15px}
+.pri{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.inst .x{width:44px;height:44px;border:0;background:transparent;color:var(--mute);cursor:pointer;font-size:22px;line-height:1}
 @media(min-width:900px){
 .top .chips{display:none}
 .layout{display:grid;grid-template-columns:240px minmax(0,720px);gap:40px;align-items:start}
@@ -111,6 +118,12 @@ img{max-width:100%}
 <ul id="srcList"></ul>
 </aside>
 <main>
+<div class="inst" id="inst" hidden>
+<img src="icon-192.png" alt="">
+<p><b>Polimedia als App</b><span id="instText">Ein Tipp, und Polimedia liegt als App auf deinem Startbildschirm.</span></p>
+<button class="btn pri" id="instBtn">Installieren</button>
+<button class="x" id="instX" aria-label="Hinweis schließen">×</button>
+</div>
 <div id="feed"><p class="stand">Lädt …</p></div>
 <div class="more" id="more" style="display:none"><button class="btn" id="moreBtn">Ältere Beiträge anzeigen</button></div>
 </main>
@@ -182,6 +195,16 @@ if(s){const id=s.dataset.save;if(S.saved[id])delete S.saved[id];else{const x=S.d
 $('savedBtn').addEventListener('click',()=>{S.view=S.view==='saved'?'feed':'saved';S.playing=null;render();window.scrollTo({top:0})});
 $('moreBtn').addEventListener('click',()=>{S.limit+=20;render()});
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+// App-Installieren-Hinweis: Android/Chrome mit echtem Knopf, iPhone mit kurzer Anleitung
+let installEvt=null;
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+const showInst=ios=>{if(standalone||store.get('pm-inst-x',false))return;$('inst').hidden=false;if(ios){$('instText').textContent='Unten auf Teilen tippen, dann „Zum Home-Bildschirm“.';$('instBtn').hidden=true}};
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;showInst(false)});
+addEventListener('appinstalled',()=>{$('inst').hidden=true});
+if(isIOS)showInst(true);
+$('instBtn').addEventListener('click',async()=>{if(!installEvt)return;installEvt.prompt();try{await installEvt.userChoice}catch(e){}installEvt=null;$('inst').hidden=true});
+$('instX').addEventListener('click',()=>{$('inst').hidden=true;store.set('pm-inst-x',true)});
 fetch('feed.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{
 S.data=d.beitraege.map(x=>({...x,datum:new Date(x.datum)}));
 S.stand=new Date(d.stand);
