@@ -1,0 +1,11 @@
+name,typ,kategorie,channel_id,feed_url,website,hinweis
+Auswärtiges Amt,youtube,Offiziell,UCpYp9GcXspUXMjsKeVdmlvA,https://www.youtube.com/feeds/videos.xml?playlist_id=UULFpYp9GcXspUXMjsKeVdmlvA,https://www.youtube.com/@AuswaertigesAmtDE,nur lange Videos (ohne Shorts)
+David Matei,youtube,Content Creator,UCssd1jiTapKwDLpeKmbfQ9A,https://www.youtube.com/feeds/videos.xml?playlist_id=UULFssd1jiTapKwDLpeKmbfQ9A,https://www.youtube.com/@sicherheitspolitik,nur lange Videos (ohne Shorts)
+tagesschau (YouTube),youtube,Nachrichten,UC5NOEUbkLheQcaaRldYW5GA,https://www.youtube.com/feeds/videos.xml?playlist_id=UULF5NOEUbkLheQcaaRldYW5GA,https://www.youtube.com/@tagesschau,nur lange Videos; viel Volumen (ganze Sendungen)
+FAZ (YouTube),youtube,Nachrichten,UCcPcua2PF7hzik2TeOBx3uw,https://www.youtube.com/feeds/videos.xml?playlist_id=UULFcPcua2PF7hzik2TeOBx3uw,https://www.youtube.com/@faz,nur lange Videos (ohne Shorts)
+Bundeswehr,youtube,Offiziell,UClCZul-nK9h8eVo7REC7RGA,https://www.youtube.com/feeds/videos.xml?playlist_id=UULFlCZul-nK9h8eVo7REC7RGA,https://www.youtube.com/@Bundeswehr,nur lange Videos; teils Recruiting-Inhalte
+NATO,youtube,Offiziell,UCHlEaKbepQ_S9iIoZPKVQew,https://www.youtube.com/feeds/videos.xml?playlist_id=UULFHlEaKbepQ_S9iIoZPKVQew,https://www.youtube.com/@NATO,nur lange Videos; englischsprachig
+Bundesregierung,youtube,Offiziell,UCcnFmkINMo4Jmkx5mvlCh6g,https://www.youtube.com/feeds/videos.xml?playlist_id=UULFcnFmkINMo4Jmkx5mvlCh6g,https://www.youtube.com/@bundesregierung,nur lange Videos (ohne Shorts)
+tagesschau Ausland,rss,Nachrichten,,https://www.tagesschau.de/ausland/index~rss2.xml,https://www.tagesschau.de/ausland,keine Paywall
+FAZ Ausland,rss,Nachrichten,,https://www.faz.net/rss/aktuell/politik/ausland/,https://www.faz.net/aktuell/politik/ausland/,teils FAZ+ (Paywall) – Markierung im Feed noch prüfen
+FAZ Wirtschaft,rss,Nachrichten,,https://www.faz.net/rss/aktuell/wirtschaft/,https://www.faz.net/aktuell/wirtschaft/,teils FAZ+ (Paywall); ca. 25 Artikel/Tag

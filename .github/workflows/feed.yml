@@ -1,0 +1,58 @@
+# Polimedia – Automatik
+# Läuft alle 30 Minuten: holt die Feeds ab und veröffentlicht die Seite neu.
+# Von Hand starten: auf GitHub unter "Actions" > "Feed aktualisieren" > "Run workflow".
+
+name: Feed aktualisieren
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"   # zur Minute 7 und 37 jeder Stunde (GitHub kann sich ein paar Minuten verspäten)
+  workflow_dispatch:          # Knopf zum Starten von Hand
+  push:
+    branches: [main]          # und jedes Mal, wenn du etwas änderst, z.B. die Quellenliste
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bauen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code holen
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pakete installieren
+        run: pip install -r requirements.txt
+
+      - name: Feeds abholen
+        run: python scripts/fetch_feeds.py
+
+      - name: Seite vorbereiten
+        uses: actions/configure-pages@v5
+
+      - name: Seite hochladen
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  veroeffentlichen:
+    needs: bauen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Seite veröffentlichen
+        id: deployment
+        uses: actions/deploy-pages@v4
